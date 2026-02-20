@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,9 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using WPF.Hospital.DTO;
+using WPF.Hospital.Service;
+using WPF.Hospital.ViewModel;
 
 namespace WPF.Hospital
 {
@@ -19,9 +23,25 @@ namespace WPF.Hospital
     /// </summary>
     public partial class AllPatients : Window
     {
-        public AllPatients()
+        private readonly IPatientService _patientService;
+
+        public AllPatients(IPatientService patientService)
         {
             InitializeComponent();
+            _patientService = patientService;
+            DataContext = new
+            {
+                Patients = _patientService.GetAll()
+                .Select(p => new PatientViewModel()
+                {
+                    Id = p.Id,
+                    FirstName = p.FirstName,
+                    LastName = p.LastName,
+                    Age = p.Age.ToString(),
+                    Birthdate = p.Birthdate
+                })
+            };
         }
     }
 }
+
