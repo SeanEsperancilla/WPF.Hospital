@@ -15,7 +15,7 @@ namespace WPF.Hospital.Service
         {
             _prescriptionRepository = prescriptionRepository;
         }
-        public (bool Ok, string Message) Create(Prescription prescription)
+        public (bool Ok, string Message) Add(Prescription prescription)
         {
             throw new NotImplementedException();
         }

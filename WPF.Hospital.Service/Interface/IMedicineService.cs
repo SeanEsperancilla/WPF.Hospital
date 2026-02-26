@@ -11,7 +11,7 @@ namespace WPF.Hospital.Service
     {
         List<Medicine> GetAll();
         Medicine? Get(int id);
-        (bool Ok, string Message) Create(Medicine medicine);
+        (bool Ok, string Message) Add(Medicine medicine);
         (bool Ok, string Message) Update(Medicine medicine);
         (bool Ok, string Message) Delete(int id);
     }

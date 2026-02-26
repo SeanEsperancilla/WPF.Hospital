@@ -15,7 +15,7 @@ namespace WPF.Hospital.Service
         {
             _medicineRepository = medicineRepository;
         }
-        public (bool Ok, string Message) Create(Medicine medicine)
+        public (bool Ok, string Message) Add(Medicine medicine)
         {
             throw new NotImplementedException();
         }

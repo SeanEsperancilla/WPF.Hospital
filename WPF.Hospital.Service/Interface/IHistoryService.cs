@@ -12,7 +12,7 @@ namespace WPF.Hospital.Service
         List<History> GetAll();
         List<History> GetByPatient(int patientId);
         History? Get(int id);
-        (bool Ok, string Message) Create(History history);
+        (bool Ok, string Message) Add(History history);
         (bool Ok, string Message) Update(History history);
         (bool Ok, string Message) Delete(int id);
     }
