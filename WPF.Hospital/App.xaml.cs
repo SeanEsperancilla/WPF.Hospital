@@ -15,34 +15,48 @@ namespace WPF.Hospital
     /// </summary>
     public partial class App : Application
     {
-        private IHost _host;
-
-        protected override void OnStartup(StartupEventArgs e)
-        { 
-            base.OnStartup(e);
-            _host = new HostBuilder()
-                .ConfigureAppConfiguration(cfg => cfg.AddJsonFile("appsettings.json", optional: false, 
-                reloadOnChange: true ))
-                .ConfigureServices((context, services) =>
-                {
-                    services.AddDbContext<HospitalDbContext>(options => {
-                        options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection"));
-                    });
-
-                    services.AddScoped<IPatientRepository, PatientRepository>();
-                    services.AddScoped<IHistoryRepository, HistoryRepository>();
-
-                    services.AddScoped<IPatientService, PatientService>();
-
-                    services.AddTransient<MainWindow>();
-                })
-                .Build();
-            _host.Start();
-
-            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
-            MainWindow.Show();
+        private readonly IHost _host;
+        public App()
+        {
+            _host = Host.CreateDefaultBuilder()
+            .ConfigureAppConfiguration((context, config) =>
+            {
+                config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+            })
+            .ConfigureServices((context, services) =>
+            {
+                services.AddDbContext<HospitalDbContext>(options =>
+                    options.UseSqlServer(
+                    context.Configuration.GetConnectionString("DefaultConnection")));
+                services.AddScoped<IPatientRepository, PatientRepository>();
+                services.AddScoped<IDoctorRepository, DoctorRepository>();
+                services.AddScoped<IHistoryRepository, HistoryRepository>();
+                services.AddScoped<IMedicineRepository, MedicineRepository>();
+                services.AddScoped<IPrescriptionRepository, PrescriptionRepository>();
+                services.AddScoped<IPatientService, PatientService>();
+                services.AddScoped<IDoctorService, DoctorService>();
+                services.AddScoped<IHistoryService, HistoryService>();
+                services.AddScoped<IMedicineService, MedicineService>();
+                services.AddScoped<IPrescriptionService, PrescriptionService>();
+                services.AddTransient<MainWindow>();
+            })
+            .Build();
         }
-
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+            using var scope = _host.Services.CreateScope();
+            var mainWindow = scope.ServiceProvider.GetRequiredService<MainWindow>();
+            mainWindow.Show();
+        }
+        protected override async void OnExit(ExitEventArgs e)
+        {
+            using (_host)
+            {
+                await _host.StopAsync();
+            }
+            base.OnExit(e);
+        }
     }
 
 }
