@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WPF.Hospital.Model;
+using WPF.Hospital.DTO;
 using WPF.Hospital.Repository;
 
 namespace WPF.Hospital.Service

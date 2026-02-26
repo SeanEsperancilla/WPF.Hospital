@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using WPF.Hospital.Model;
+using WPF.Hospital.DTO;
 using WPF.Hospital.Repository;
 
 namespace WPF.Hospital.Service
@@ -45,12 +45,36 @@ namespace WPF.Hospital.Service
             if (id <= 0)
                 return null;
 
-            return _medicineRepository.Get(id);
+            var medicineModel = _medicineRepository.Get(id);
+            if (medicineModel == null)
+                return null;
+
+            var medicine = new Medicine
+            {
+                Id = medicineModel.Id,
+                Name = medicineModel.Name,
+                Brand = medicineModel.Brand
+            };
+
+            return medicine;
         }
 
         public List<Medicine> GetAll()
         {
-            return _medicineRepository.GetAll();
+            var models = _medicineRepository.GetAll();
+            var dtos = new List<Medicine>();
+
+            foreach (var medicine in models)
+            {
+                dtos.Add(new Medicine
+                {
+                    Id = medicine.Id,
+                    Name = medicine.Name,
+                    Brand = medicine.Brand
+                });
+            }
+
+            return dtos;
         }
 
         public (bool Ok, string Message) Update(Medicine medicine)
