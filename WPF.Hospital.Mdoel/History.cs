@@ -12,7 +12,7 @@ namespace WPF.Hospital.Model
         public int PatientId { get; set; }
         public Patient Patient { get; set; }
         public int DoctorId { get; set; }
-        public Doctor doctor { get; set; }
+        public Doctor Doctor { get; set; }
         public string Procedure { get; set; }
     }
 }

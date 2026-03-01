@@ -11,8 +11,8 @@ namespace WPF.Hospital.Repository
     {
         List<Doctor> GetAll();
         Doctor? Get(int id);
-        void Add(Doctor entity);
-        void Update(Doctor entity);
+        void Add(Doctor doctor);
+        void Update(Doctor doctor);
         void Delete(int id);
         int Save();
     }

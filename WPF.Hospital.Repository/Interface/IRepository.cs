@@ -13,6 +13,6 @@ namespace WPF.Hospital.Repository
         void Add(T entity);
         void Update(T entity);
         void Delete(int id);
-        int Save();
+        void Save();
     }
 }

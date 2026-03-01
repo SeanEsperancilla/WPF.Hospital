@@ -13,5 +13,11 @@ namespace WPF.Hospital.DTO
         public int MedicineId { get; set; }
         public int Quantity { get; set; }
         public string Frequency { get; set; }
+
+        public History History { get; set; }
+        public Medicine Medicine { get; set; }
+
+        public Patient Patient { get; set; }
+
     }
 }

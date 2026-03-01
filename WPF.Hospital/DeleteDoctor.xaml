@@ -1,0 +1,46 @@
+﻿<Window x:Class="WPF.Hospital.DeleteDoctor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Delete Doctor"
+        Height="400" Width="700"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <Label Grid.Row="0"
+               Content="Delete Doctor"
+               FontWeight="Bold"
+               FontSize="16"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center"/>
+
+        <!-- Doctors DataGrid -->
+        <DataGrid Grid.Row="1"
+                  x:Name="dgDoctors"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  Margin="0,10,0,10">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="150"/>
+                <DataGridTextColumn Header="Last Name" Binding="{Binding LastName}" Width="150"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <!-- Delete Button -->
+        <Button Grid.Row="2"
+                x:Name="btnDeleteDoctor"
+                Content="Delete Selected Doctor"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Width="200"
+                Click="btnDeleteDoctor_Click"/>
+    </Grid>
+</Window>

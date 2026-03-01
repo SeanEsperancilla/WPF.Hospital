@@ -1,0 +1,61 @@
+﻿<Window x:Class="WPF.Hospital.AddHistory"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Add Medical History"
+        Height="300" Width="600"
+        WindowStartupLocation="CenterScreen">
+
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <!-- Header -->
+            <RowDefinition Height="40"/>
+            <!-- Patient -->
+            <RowDefinition Height="40"/>
+            <!-- Doctor -->
+            <RowDefinition Height="40"/>
+            <!-- Procedure -->
+            <RowDefinition Height="50"/>
+            <!-- Button -->
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Header -->
+        <Label Grid.Row="0" Grid.ColumnSpan="2"
+               Content="Add Medical History"
+               FontWeight="Bold"
+               FontSize="16"
+               HorizontalAlignment="Center"/>
+
+        <!-- Patient ComboBox -->
+        <Label Grid.Row="1" Grid.Column="0" Content="Patient:" VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="1" Grid.Column="1"
+                  x:Name="cbPatients"
+                  DisplayMemberPath="FullName"
+                  SelectedValuePath="{Binding Patient}"
+                  Width="250"/>
+
+        <!-- Doctor ComboBox -->
+        <Label Grid.Row="2" Grid.Column="0" Content="Doctor:" VerticalAlignment="Center"/>
+        <ComboBox Grid.Row="2" Grid.Column="1"
+                  x:Name="cbDoctors"
+                  DisplayMemberPath="FullName"
+                  SelectedValuePath="{Binding Doctor}"
+                  Width="250"/>
+
+        <!-- Procedure -->
+        <Label Grid.Row="3" Grid.Column="0" Content="Procedure:" VerticalAlignment="Center"/>
+        <TextBox Grid.Row="3" Grid.Column="1" x:Name="txtProcedure" Width="250"/>
+
+        <!-- Add Button -->
+        <Button Grid.Row="4" Grid.ColumnSpan="2"
+                Content="Add History"
+                x:Name="btnAddHistory"
+                Click="btnAddHistory_Click"
+                HorizontalAlignment="Center"
+                Width="150"/>
+    </Grid>
+</Window>

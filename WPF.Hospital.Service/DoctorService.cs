@@ -9,11 +9,15 @@ namespace WPF.Hospital.Service
     public class DoctorService : IDoctorService
     {
         private readonly IDoctorRepository _doctorRepository;
+        private readonly IHistoryRepository _historyRepository;
 
-        public DoctorService(IDoctorRepository doctorRepository)
+        public DoctorService(IDoctorRepository doctorRepository,
+                             IHistoryRepository historyRepository)
         {
             _doctorRepository = doctorRepository;
+            _historyRepository = historyRepository;
         }
+
 
         public (bool Ok, string Message) Add(Doctor doctor)
         {
@@ -36,17 +40,25 @@ namespace WPF.Hospital.Service
 
             _doctorRepository.Add(modelDoctor);
             return (true, "Doctor added successfully.");
+
         }
 
         public (bool Ok, string Message) Delete(int id)
         {
-            var existing = _doctorRepository.Get(id);
-            if (existing == null)
-                return (false, "Doctor not found.");
+            var doctor = _doctorRepository.Get(id);
+            if (doctor == null) return (false, "Doctor not found.");
+
+            var histories = _historyRepository.GetAll()
+                .Where(h => h.DoctorId == id).ToList();
+
+            if (histories.Any())
+                return (false, "Cannot delete doctor because related histories exist.");
 
             _doctorRepository.Delete(id);
+            _doctorRepository.Save();
             return (true, "Doctor deleted successfully.");
         }
+
 
         public Doctor? Get(int id)
         {
@@ -94,6 +106,11 @@ namespace WPF.Hospital.Service
 
             _doctorRepository.Update(modelDoctor);
             return (true, "Doctor updated successfully.");
+        }
+
+        public void Save()
+        {
+            _doctorRepository.Save();
         }
     }
 }

@@ -26,7 +26,14 @@ namespace WPF.Hospital.Repository
 
         public void Update(Patient entity)
         {
-            _context.Patients.Update(entity);
+            var existing = _context.Patients.Find(entity.Id);
+            if (existing != null)
+            {
+                existing.FirstName = entity.FirstName;
+                existing.LastName = entity.LastName;
+                existing.Age = entity.Age;
+                existing.Birthdate = entity.Birthdate;
+            }
         }
 
         public void Delete(int id)
@@ -38,6 +45,6 @@ namespace WPF.Hospital.Repository
             }
         }
 
-        public int Save() => _context.SaveChanges();
+        public void Save() => _context.SaveChanges();
     }
 }

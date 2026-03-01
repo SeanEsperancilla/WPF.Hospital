@@ -52,5 +52,18 @@ namespace WPF.Hospital.Repository
         {
             _context.Prescription.Update(entity);
         }
+
+        public List<Prescription> GetByPatientId(int patientId)
+        {
+            return _context.Prescription
+                           .Where(p => p.History.PatientId == patientId)
+                           .ToList();
+        }
+
+
+        IEnumerable<Prescription> IPrescriptionRepository.GetByPatientId(int patientId)
+        {
+            return GetByPatientId(patientId);
+        }
     }
 }

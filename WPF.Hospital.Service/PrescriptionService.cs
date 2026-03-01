@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.Infrastructure;
+using System;
 using System.Collections.Generic;
+using System.Reflection.Metadata.Ecma335;
 using WPF.Hospital.DTO;
 using WPF.Hospital.Repository;
 
@@ -17,21 +19,48 @@ namespace WPF.Hospital.Service
         public (bool Ok, string Message) Add(Prescription prescription)
         {
             if (prescription == null)
+            {
                 return (false, "Prescription cannot be null.");
-
+            }
+            
             if (prescription.HistoryId <= 0)
-                return (false, "Invalid history ID.");
+            {
+                return (false, "Invalid HistoryId.");
+            }
 
             if (prescription.MedicineId <= 0)
-                return (false, "Invalid medicine ID.");
+            {
+                return (false, "Invalid MedicineId.");
+            }
 
             if (prescription.Quantity <= 0)
+            {
                 return (false, "Quantity must be greater than zero.");
+            }
 
             if (string.IsNullOrWhiteSpace(prescription.Frequency))
-                return (false, "Frequency is required.");
+            {
+                return (false, "Frequency cannot be empty.");
+            }
+            if (prescription.Frequency.Length > 100)
+            {
+                return (false, "Frequency cannot exceed 100 characters.");
+            }
 
-            _prescriptionRepository.Add(prescription);
+            var existing = _prescriptionRepository.Get(prescription.Id);
+            if (existing == null)
+                return (false, "Prescription already exist.");
+
+            var modelPrescription = new WPF.Hospital.Model.Prescription
+            {
+                Id = prescription.Id,
+                HistoryId = prescription.HistoryId,
+                MedicineId = prescription.MedicineId,
+                Quantity = prescription.Quantity,
+                Frequency = prescription.Frequency
+            };
+
+            _prescriptionRepository.Add(modelPrescription);
             return (true, "Prescription added successfully.");
         }
 
@@ -42,28 +71,44 @@ namespace WPF.Hospital.Service
                 return (false, "Prescription not found.");
 
             _prescriptionRepository.Delete(id);
-            return (true, "Prescription deleted successfully.");
+            return (true, "Prescription deleted succesfully");
         }
 
         public Prescription? Get(int id)
         {
-            if (id <= 0)
+            var modelPrescription = _prescriptionRepository.Get(id);
+            if (modelPrescription == null)
                 return null;
 
-            return _prescriptionRepository.Get(id);
+            return new Prescription
+            {
+                Id = modelPrescription.Id,
+                HistoryId = modelPrescription.HistoryId,
+                MedicineId = modelPrescription.MedicineId,
+                Quantity = modelPrescription.Quantity,
+                Frequency = modelPrescription.Frequency
+            };
         }
 
         public List<Prescription> GetAll()
         {
-            return _prescriptionRepository.GetAll();
+            var modelPrescription = _prescriptionRepository.GetAll();
+            if (modelPrescription == null)
+                return new List<Prescription>();
+
+            return modelPrescription.Select(m => new Prescription
+            {
+                Id = m.Id,
+                HistoryId = m.HistoryId,
+                MedicineId = m.MedicineId,
+                Quantity = m.Quantity,
+                Frequency = m.Frequency
+            }).ToList();
         }
 
         public List<Prescription> GetByHistory(int historyId)
         {
-            if (historyId <= 0)
-                return new List<Prescription>();
-
-            return _prescriptionRepository.GetByHistory(historyId);
+            throw new NotImplementedException();
         }
 
         public (bool Ok, string Message) Update(Prescription prescription)
@@ -75,15 +120,21 @@ namespace WPF.Hospital.Service
             if (existing == null)
                 return (false, "Prescription not found.");
 
-            existing.Id = prescription.Id;
-            existing.HistoryId = prescription.HistoryId;
-            existing.MedicineId = prescription.MedicineId;
-            existing.Quantity = prescription.Quantity;
-            existing.Frequency = prescription.Frequency ?? string.Empty;
-
-            _prescriptionRepository.Update(existing);
-
+            var modelPrescription = new WPF.Hospital.Model.Prescription
+            {
+                Id = prescription.Id,
+                HistoryId = prescription.HistoryId,
+                MedicineId = prescription.MedicineId,
+                Quantity = prescription.Quantity,
+                Frequency = prescription.Frequency
+            };
+            
+            _prescriptionRepository.Update(modelPrescription);
             return (true, "Prescription updated successfully.");
+       
         }
     }
 }
+
+
+       

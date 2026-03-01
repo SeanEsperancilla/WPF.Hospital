@@ -16,5 +16,8 @@ namespace WPF.Hospital.Repository
         void Update(Prescription entity);
         void Delete(int id);
         int Save();
+
+        IEnumerable<Model.Prescription> GetByPatientId(int patientId);
+
     }
 }

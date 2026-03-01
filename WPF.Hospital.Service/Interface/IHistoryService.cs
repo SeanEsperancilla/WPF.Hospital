@@ -15,5 +15,10 @@ namespace WPF.Hospital.Service
         (bool Ok, string Message) Add(History history);
         (bool Ok, string Message) Update(History history);
         (bool Ok, string Message) Delete(int id);
+        void Save();
+
+        List<Patient> GetAllPatients();
+        List<Doctor> GetAllDoctors();
+
     }
 }

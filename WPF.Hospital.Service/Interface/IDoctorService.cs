@@ -14,5 +14,6 @@ namespace WPF.Hospital.Service
         (bool Ok, string Message) Add(Doctor doctor);
         (bool Ok, string Message) Update(Doctor doctor);
         (bool Ok, string Message) Delete(int id);
+            void Save();
     }
 }

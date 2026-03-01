@@ -5,76 +5,111 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF.Hospital"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="900">
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100"></RowDefinition>
-            <RowDefinition Height="20"></RowDefinition>
-            <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="80"></RowDefinition>
-            <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="80"></RowDefinition>
-            <RowDefinition Height="35"></RowDefinition>
-            <RowDefinition Height="80"></RowDefinition>
+            <RowDefinition Height="100"/>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="35"/>
+            <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
+
+        <!-- Header -->
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100"></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Image Source="/hospital.jpg" ></Image>
+            <Image Source="/hospital.jpg"/>
             <Rectangle Grid.Column="1" Fill="#FFFFE600"/>
-            <TextBlock Text="UAC Medical Center" Grid.Column="1" VerticalAlignment="Center" FontSize="36" FontWeight="Bold" FontFamily="Arial" Padding="10,0,0,0"></TextBlock>
+            <TextBlock Text="UAC Medical Center"
+                       Grid.Column="1"
+                       VerticalAlignment="Center"
+                       FontSize="36"
+                       FontWeight="Bold"
+                       FontFamily="Arial"
+                       Padding="10,0,0,0"/>
         </Grid>
+
+        <!-- Menu -->
         <Menu Grid.Row="1">
             <MenuItem Header="Patient">
-                <MenuItem Header="Add Patient"></MenuItem>
+                <MenuItem Header="Add Patient" Click="btnAddPatient_Click"/>
+                <MenuItem Header="Update Patient" Click="btnUpdatePatient_Click"/>
+                <MenuItem Header="Delete Patient" Click="btnDeletePatient_Click"/>
+            </MenuItem>
+            <MenuItem Header="History">
+                <MenuItem Header="Add History" Click="btnAddHistory_Click"/>
+                <MenuItem Header="Delete History" Click="btnDeleteHistory_Click"/>
+            </MenuItem>
+            <MenuItem Header="Prescription">
+                <MenuItem Header="Add Prescription" Click="btnAddPrescription_Click"/>
+                <MenuItem Header="Delete Prescription" Click="btnDeletePrescription_Click"/>
             </MenuItem>
             <MenuItem Header="Medicine">
-                <MenuItem Header="Add Patient"></MenuItem>
+                <MenuItem Header="Add Medicine" Click="btnAddMedicine_Click"/>
+                <MenuItem Header="Update Medicine" Click="btnUpdateMedicine_Click"/>
+                <MenuItem Header="Delete Medicine" Click="btnDeleteMedicine_Click"/>
             </MenuItem>
             <MenuItem Header="Doctors">
-                <MenuItem Header="Add Doctor"></MenuItem>
+                <MenuItem Header="Add Doctor" Click="btnAddDoctor_Click"/>
+                <MenuItem Header="Update Doctor" Click="btnUpdateDoctor_Click"/>
+                <MenuItem Header="Delete Doctor" Click="btnDeleteDoctor_Click"/>
             </MenuItem>
         </Menu>
-        <Label Grid.Row="2" Margin="2" Content="Patient Maintenance" FontSize="16" FontWeight="Bold"></Label>
+
+        <!-- Patient Maintenance -->
+        <Label Grid.Row="2" Margin="2" Content="Patient Maintenance" FontSize="16" FontWeight="Bold"/>
         <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="3">
-            <StackPanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Margin" Value="5"></Setter>
-                    <Setter Property="Padding" Value="10"></Setter>
-                    <Setter Property="BorderThickness"  Value="0"></Setter>
-                </Style>
-            </StackPanel.Resources>
-            <Button x:Name="btnAddPatient" Content="Add Patient" Click="btnAddPatient_Click"></Button>
-            <Button Content="Delete Patient" Click="btnDeletePatient_Click"></Button>
-            <Button x:Name="btnAllPatients" Content="All Patients" Click="btnAllPatients_Click"></Button>
+            <Button Content="Add Patient" Click="btnAddPatient_Click" Margin="5" Padding="10"/>
+            <Button Content="Update Patient" Click="btnUpdatePatient_Click" Margin="5" Padding="10"/>
+            <Button Content="Delete Patient" Click="btnDeletePatient_Click" Margin="5" Padding="10"/>
+            <Button Content="All Patients" Click="btnAllPatients_Click" Margin="5" Padding="10"/>
         </StackPanel>
-        <Label Grid.Row="4" Margin="2" Content="Medicine Maintenance" FontSize="16" FontWeight="Bold"></Label>
+
+        <!-- Medical History Maintenance -->
+        <Label Grid.Row="4" Margin="2" Content="Medical History Maintenance" FontSize="16" FontWeight="Bold"/>
         <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="5">
-            <StackPanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Margin" Value="5"></Setter>
-                    <Setter Property="Padding" Value="10"></Setter>
-                    <Setter Property="BorderThickness"  Value="0"></Setter>
-                </Style>
-            </StackPanel.Resources>
-            <Button x:Name="btnAddMedicine" Content="Add Add Medicine"></Button>
-            <Button Content="Delete Medicine"></Button>
-            <Button x:Name="btnAllMedicine" Content="All Medicine"></Button>
+            <Button Content="Add History" Click="btnAddHistory_Click" Margin="5" Padding="10"/>
+            <Button Content="Delete History" Click="btnDeleteHistory_Click" Margin="5" Padding="10"/>
+            <Button Content="All History" Click="btnAllHistory_Click" Margin="5" Padding="10"/>
         </StackPanel>
-        <Label Grid.Row="6" Margin="2" Content="Doctor Maintenance" FontSize="16" FontWeight="Bold"></Label>
+
+        <!-- Prescription Maintenance -->
+        <Label Grid.Row="6" Margin="2" Content="Prescription Maintenance" FontSize="16" FontWeight="Bold"/>
         <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="7">
-            <StackPanel.Resources>
-                <Style TargetType="Button">
-                    <Setter Property="Margin" Value="5"></Setter>
-                    <Setter Property="Padding" Value="10"></Setter>
-                    <Setter Property="BorderThickness"  Value="0"></Setter>
-                </Style>
-            </StackPanel.Resources>
-            <Button x:Name="btnAddDoctor" Content="Add Doctor"></Button>
-            <Button Content="Delete Doctor"></Button>
-            <Button x:Name="btnAllDoctor" Content="All Doctors"></Button>
+            <Button Content="Add Prescription" Click="btnAddPrescription_Click" Margin="5" Padding="10"/>
+            <Button Content="Delete Prescription" Click="btnDeletePrescription_Click" Margin="5" Padding="10"/>
+            <Button Content="All Prescriptions" Click="btnAllPrescription_Click" Margin="5" Padding="10"/>
+        </StackPanel>
+
+        <!-- Medicine Maintenance -->
+        <Label Grid.Row="8" Margin="2" Content="Medicine Maintenance" FontSize="16" FontWeight="Bold"/>
+        <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="9">
+            <Button Content="Add Medicine" Click="btnAddMedicine_Click" Margin="5" Padding="10"/>
+            <Button Content="Update Medicine" Click="btnUpdateMedicine_Click" Margin="5" Padding="10"/>
+            <Button Content="Delete Medicine" Click="btnDeleteMedicine_Click" Margin="5" Padding="10"/>
+            <Button Content="All Medicine" Click="btnAllMedicine_Click" Margin="5" Padding="10"/>
+        </StackPanel>
+
+        <!-- Doctor Maintenance -->
+        <Label Grid.Row="10" Margin="2" Content="Doctor Maintenance" FontSize="16" FontWeight="Bold"/>
+        <StackPanel Margin="5" Orientation="Horizontal" Grid.Row="11">
+            <Button Content="Add Doctor" Click="btnAddDoctor_Click" Margin="5" Padding="10"/>
+            <Button Content="Update Doctor" Click="btnUpdateDoctor_Click" Margin="5" Padding="10"/>
+            <Button Content="Delete Doctor" Click="btnDeleteDoctor_Click" Margin="5" Padding="10"/>
+            <Button Content="All Doctors" Click="btnAllDoctor_Click" Margin="5" Padding="10"/>
         </StackPanel>
     </Grid>
 </Window>

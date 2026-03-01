@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WPF.Hospital.Model;
+using WPF.Hospital.DTO;
 
 namespace WPF.Hospital.Service
 {
@@ -14,5 +14,6 @@ namespace WPF.Hospital.Service
         (bool Ok, string Message) Add(Medicine medicine);
         (bool Ok, string Message) Update(Medicine medicine);
         (bool Ok, string Message) Delete(int id);
+            void Save();
     }
 }

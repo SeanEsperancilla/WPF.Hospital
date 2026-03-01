@@ -37,7 +37,7 @@ namespace WPF.Hospital
                     Id = p.Id,
                     FirstName = p.FirstName,
                     LastName = p.LastName,
-                    Age = p.Age.ToString(),
+                    Age = p.Age,
                     Birthdate = p.Birthdate
                 })
             };

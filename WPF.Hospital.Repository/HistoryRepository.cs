@@ -1,23 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WPF.Hospital.Model;
+﻿using WPF.Hospital.Model;
 
 namespace WPF.Hospital.Repository
 {
     public class HistoryRepository : IHistoryRepository
     {
         private readonly HospitalDbContext _context;
+
         public HistoryRepository(HospitalDbContext context)
         {
             _context = context;
         }
+
         public void Add(History entity)
         {
             _context.History.Add(entity);
         }
+
+
 
         public void Delete(int id)
         {
@@ -38,9 +37,9 @@ namespace WPF.Hospital.Repository
             return _context.History.ToList();
         }
 
-        public int Save()
+        public void Save()
         {
-            return _context.SaveChanges();
+            _context.SaveChanges();
         }
 
         public void Update(History entity)
@@ -49,8 +48,9 @@ namespace WPF.Hospital.Repository
         }
 
         public IEnumerable<History> GetByPatientId(int patientId)
-        { 
+        {
             return _context.History.Where(h => h.PatientId == patientId).ToList();
         }
     }
 }
+

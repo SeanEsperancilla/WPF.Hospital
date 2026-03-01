@@ -32,15 +32,18 @@ namespace WPF.Hospital
 
         private void btnAddPatient_Click(object sender, RoutedEventArgs e)
         {
-            _patientService.Add(new DTO.Patient()
+            _patientService.Add(new DTO.Patient
             {
                 FirstName = ((PatientViewModel)DataContext).FirstName,
                 LastName = ((PatientViewModel)DataContext).LastName,
                 Age = Convert.ToInt32(((PatientViewModel)DataContext).Age),
                 Birthdate = ((PatientViewModel)DataContext).Birthdate
             });
-
+            _patientService.Save();
             MessageBox.Show("Patient Added Successfully!");
+            this.Close();
+
         }
+
     }
 }

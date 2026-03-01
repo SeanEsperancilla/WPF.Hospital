@@ -12,16 +12,20 @@ namespace WPF.Hospital.Service
     {
         private readonly IPatientRepository _patientRepository;
         private readonly IHistoryRepository _historyRepository;
+        private readonly IPrescriptionRepository _prescriptionRepository;
 
-        public PatientService(IPatientRepository repository, IHistoryRepository historyRepository)
+        public PatientService(IPatientRepository repository,
+                              IHistoryRepository historyRepository,
+                              IPrescriptionRepository prescriptionRepository)
         {
             _patientRepository = repository;
             _historyRepository = historyRepository;
+            _prescriptionRepository = prescriptionRepository;
         }
 
         public Patient Get(int id)
         {
-            Model.Patient patient = _patientRepository.Get(id);
+            var patient = _patientRepository.Get(id);
 
             return new Patient
             {
@@ -42,7 +46,7 @@ namespace WPF.Hospital.Service
         public IEnumerable<Patient> GetAll()
         {
             return _patientRepository.GetAll()
-                .Select(patient => new Patient()
+                .Select(patient => new Patient
                 {
                     Id = patient.Id,
                     FirstName = patient.FirstName,
@@ -61,13 +65,42 @@ namespace WPF.Hospital.Service
                 Age = patient.Age,
                 Birthdate = patient.Birthdate,
             });
-
-            _patientRepository.Save();
         }
-        public void Delete(int Id)
-        { 
-            _patientRepository.Delete(Id);
+
+        public void Update(Patient patient)
+        {
+            _patientRepository.Update(new Model.Patient
+            {
+                Id = patient.Id,
+                FirstName = patient.FirstName,
+                LastName = patient.LastName,
+                Age = patient.Age,
+                Birthdate = patient.Birthdate,
+            });
+        }
+
+        public void Delete(int id)
+        {
+            var histories = _historyRepository.GetByPatientId(id);
+            if (histories.Any())
+            {
+                throw new InvalidOperationException("Cannot delete patient because related medical history records exist.");
+            }
+
+            var prescriptions = _prescriptionRepository.GetByPatientId(id);
+            if (prescriptions.Any())
+            {
+                throw new InvalidOperationException("Cannot delete patient because related prescription records exist.");
+            }
+
+            _patientRepository.Delete(id);
+        }
+
+
+        public void Save()
+        {
             _patientRepository.Save();
         }
     }
+
 }

@@ -14,9 +14,9 @@ namespace WPF.Hospital.Repository
         {
             _context = context;
         }
-        public void Add(Doctor entity)
+        public void Add(Doctor doctor)
         {
-            _context.Doctor.Add(entity);
+            _context.Doctor.Add(doctor);
         }
 
         public void Delete(int id)
@@ -43,9 +43,16 @@ namespace WPF.Hospital.Repository
             return _context.SaveChanges();
         }
 
-        public void Update(Doctor entity)
+        public void Update(Doctor doctor)
         {
-            _context.Doctor.Update(entity);
-        }
+            var existing = _context.Doctor.Find(doctor.Id);
+            if (existing != null)
+            {
+                existing.Id = doctor.Id;
+                existing.FirstName = doctor.FirstName;
+                existing.LastName = doctor.LastName;
+                _context.Doctor.Update(existing);
+            }
+        } 
     }
 }

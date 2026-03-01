@@ -45,10 +45,12 @@ namespace WPF.Hospital
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            using var scope = _host.Services.CreateScope();
-            var mainWindow = scope.ServiceProvider.GetRequiredService<MainWindow>();
+
+            var mainWindow = _host.Services.GetRequiredService<MainWindow>();
             mainWindow.Show();
         }
+
+
         protected override async void OnExit(ExitEventArgs e)
         {
             using (_host)
